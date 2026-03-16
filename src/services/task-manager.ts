@@ -1,4 +1,4 @@
-import type { Task } from '../models/tasks';
+import type { Task } from '../models/tasks.js';
 
 abstract class TaskManager {
     abstract addTask(id: number, title: string, description: string, status: 'pending' | 'in-progress' | 'completed'): void;
@@ -9,7 +9,6 @@ abstract class TaskManager {
 
     abstract deleteTask(id: number): void;
 }
-
 class InmemoryTaskManager extends TaskManager {
     private tasks: Task[] = [];
 
@@ -36,3 +35,4 @@ class InmemoryTaskManager extends TaskManager {
         this.tasks = this.tasks.filter(task => task.id !== id);
     }
 }
+export { InmemoryTaskManager };
