@@ -1,18 +1,36 @@
 import type { Task } from '../models/tasks.js';
 
 abstract class TaskManager {
-    abstract addTask(id: number, title: string, description: string, status: 'pending' | 'in-progress' | 'completed'): void;
+    abstract addTask(
+        id: number,
+        title: string,
+        description: string,
+        status: 'pending' | 'in-progress' | 'completed'
+    ): void;
 
     abstract getTask(id: number): Task | undefined;
 
-    abstract updateTask(id: number, title?: string, description?: string, status?: 'pending' | 'in-progress' | 'completed'): void;
+    abstract updateTask(
+        id: number,
+        title?: string,
+        description?: string,
+        status?: 'pending' | 'in-progress' | 'completed'
+    ): void;
 
     abstract deleteTask(id: number): void;
+
+    abstract getAllTasks(): Task[];
 }
+
 class InmemoryTaskManager extends TaskManager {
     private tasks: Task[] = [];
 
-    addTask(id: number, title: string, description: string, status: 'pending' | 'in-progress' | 'completed'): void {
+    addTask(
+        id: number,
+        title: string,
+        description: string,
+        status: 'pending' | 'in-progress' | 'completed'
+    ): void {
         const task: Task = { id, title, description, status };
         this.tasks.push(task);
     }
@@ -21,7 +39,12 @@ class InmemoryTaskManager extends TaskManager {
         return this.tasks.find(task => task.id === id);
     }
 
-    updateTask(id: number, title?: string, description?: string, status?: 'pending' | 'in-progress' | 'completed'): void {
+    updateTask(
+        id: number,
+        title?: string,
+        description?: string,
+        status?: 'pending' | 'in-progress' | 'completed'
+    ): void {
         const taskIndex = this.tasks.findIndex(task => task.id === id);
         if (taskIndex !== -1) {
             const task = this.tasks[taskIndex]!;
@@ -34,5 +57,10 @@ class InmemoryTaskManager extends TaskManager {
     deleteTask(id: number): void {
         this.tasks = this.tasks.filter(task => task.id !== id);
     }
+
+    getAllTasks(): Task[] {
+        return this.tasks;
+    }
 }
+
 export { InmemoryTaskManager };

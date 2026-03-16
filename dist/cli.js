@@ -1,10 +1,7 @@
 import { InmemoryTaskManager } from './services/task-manager.js';
-
 const taskManager = new InmemoryTaskManager();
-
 const args = process.argv.slice(2);
 const command = args[0];
-
 switch (command) {
     case 'add': {
         if (!args[1] || !args[2]) {
@@ -14,7 +11,7 @@ switch (command) {
         const id = parseInt(args[1], 10);
         const title = args[2];
         const description = args[3] || '';
-        const status = args[4] as 'pending' | 'in-progress' | 'completed';
+        const status = args[4];
         taskManager.addTask(id, title, description, status);
         console.log('Task added!');
         break;
@@ -35,7 +32,7 @@ switch (command) {
         const id = parseInt(args[1], 10);
         const title = args[2]; // optional
         const description = args[3]; // optional
-        const status = args[4] as 'pending' | 'in-progress' | 'completed'; // optional
+        const status = args[4]; // optional
         taskManager.updateTask(id, title, description, status);
         console.log('Task updated!');
         break;
@@ -55,3 +52,4 @@ switch (command) {
         break;
     }
 }
+//# sourceMappingURL=cli.js.map
